@@ -1,0 +1,12 @@
+.carousel {
+     max-width: 420px; 
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+}
+
+.carousel-item {
+    min-width: 50%;
+}
