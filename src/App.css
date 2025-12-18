@@ -1,25 +1,27 @@
-.screen{
-    display: flex;
-    min-height: 100vh;
+.screen {
+  display: flex;
+  min-height: 100vh;
 }
 
-.main{
-    flex: 1;
-    min-width: 0px;
-  background: radial-gradient(
-    ellipse at 0% 100%,
-    rgba(31, 169, 17, 0.81) 30.21%,
-    #422ad7 53.58%,
-    rgb(0, 0, 0) 80%
-  );
+.main {
+  flex: 1;
+  min-width: 0px;
+  background: radial-gradient(ellipse at 0% 100%,
+      rgba(31, 169, 17, 0.81) 30.21%,
+      #422ad7 53.58%,
+      rgb(0, 0, 0) 80%);
 
   background-repeat: no-repeat;
+  padding-bottom: 40px;
 }
 
-.aside{
-   width: 640px;
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   align-items: center;
+.aside {
+  width: 640px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  height: 100vh;
 }

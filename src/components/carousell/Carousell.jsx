@@ -1,49 +1,59 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react"; // Added useState
 import "./carousell.css";
 import Card from "../card/Card.jsx";
+import { Bell, ChartNoAxesColumn, Clock } from "lucide-react";
 
 export default function Carousel() {
-  const trackRef = useRef(null);
-  const intervalRef = useRef(null);
+    const trackRef = useRef(null);
+    const requestRef = useRef();
+    const positionRef = useRef(0);
+    const isHovered = useRef(false); // Using a ref for hover to avoid re-renders
 
-  useEffect(() => {
-    const track = trackRef.current;
+    const items = [
+        { id: 1, icon: <Bell />, type: "email" },
+        { id: 2, icon: <ChartNoAxesColumn />, isCheckBox: true, type: "notify_amount" },
+        { id: 3, icon: <Clock />, isCheckBox: true, type: "notify_time" },
+    ];
 
-    const slideOnce = () => {
-      track.style.transition = "transform 0.4s ease";
-      track.style.transform = "translateX(-50%)"; // move ONE card
+    const displayItems = [...items, ...items];
 
-      const onTransitionEnd = () => {
-        track.style.transition = "none";
-        track.style.transform = "translateX(0)";
+    useEffect(() => {
+        const animate = () => {
+            const track = trackRef.current;
+            if (!track) return;
 
-        // move first slide to end (hidden)
-        track.appendChild(track.firstElementChild);
+            // Only move the position if NOT hovered
+            if (!isHovered.current) {
+                positionRef.current -= 0.6;
+                const halfWidth = track.scrollWidth / 2;
+                
+                if (Math.abs(positionRef.current) >= halfWidth) {
+                    positionRef.current = 0;
+                }
+                
+                track.style.transform = `translateX(${positionRef.current}px)`;
+            }
 
-        track.removeEventListener("transitionend", onTransitionEnd);
-      };
+            requestRef.current = requestAnimationFrame(animate);
+        };
 
-      track.addEventListener("transitionend", onTransitionEnd);
-    };
+        requestRef.current = requestAnimationFrame(animate);
+        return () => cancelAnimationFrame(requestRef.current);
+    }, []);
 
-    intervalRef.current = setInterval(slideOnce, 3000);
-
-    return () => clearInterval(intervalRef.current);
-  }, []);
-
-  return (
-    <div className="carousel">
-      <div className="carousel-track" ref={trackRef}>
-        <div className="carousel-item">
-          <Card size="small" />
+    return (
+        <div 
+            className="carousel"
+            onMouseEnter={() => { isHovered.current = true; }} // Set hover to true
+            onMouseLeave={() => { isHovered.current = false; }} // Set hover to false
+        >
+            <div className="carousel-track" ref={trackRef}>
+                {displayItems.map((item, index) => (
+                    <div key={index} className="carousel-item">
+                        <Card size="small" icon={item.icon} isCheckBox={item.isCheckBox} type={item.type} />
+                    </div>
+                ))}
+            </div>
         </div>
-        <div className="carousel-item">
-          <Card size="small" />
-        </div>
-        <div className="carousel-item">
-          <Card size="small" />
-        </div>
-      </div>
-    </div>
-  );
+    );
 }

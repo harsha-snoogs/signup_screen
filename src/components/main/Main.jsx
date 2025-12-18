@@ -1,7 +1,11 @@
 import './main.css'
 import { Bell, Eye } from 'lucide-react'
 import centerImage from '../../assets/center_image.svg'
+import squareLogo from '../../../src/assets/logo_sqaure.svg'
 import Carousel from '../carousell/Carousell.jsx'
+import Card from '../card/Card.jsx'
+import { testimonial } from '../../utils/data.js'
+import TestimonialRow from '../TestimonailRow.jsx'
 function Main() {
     return (
         <div className="main_page">
@@ -42,6 +46,18 @@ function CenterSection() {
 
 function Testimonial() {
     return (
-        <div className='testimonial'>Testimonial</div>
+        <div className='testimonial'>
+            <div className='testimonial_head'> Testimonials</div>
+            <div className='divider'></div>
+            <div className='testimonial_main'>
+                {/* <div className='logo'></div> */}
+                <img className='square_logo' src={squareLogo} alt="" />
+              <TestimonialRow>
+                    {testimonial.map((item, index) => (
+                       <Card size='large' key={index} review={item.review} name={item.name} designation={item.designation} />
+                    ))}
+                </TestimonialRow>
+            </div>
+        </div>
     )
 }    
