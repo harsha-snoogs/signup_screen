@@ -104,3 +104,27 @@
 .square_logo {
     align-self: flex-end;
 }
+
+@media (max-width: 768px) {
+    .top_section {
+        flex-direction: column;
+    }
+
+    .center_section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .testimonial_head {
+        text-align: left;
+    }
+    .square_logo{
+        display: none;
+    }
+}
+
+@media (min-width: 1440px) {
+    .top_section_left {
+        max-width: 462px;
+    }
+}
