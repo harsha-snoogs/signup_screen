@@ -37,3 +37,10 @@
     padding: 30px;
   }
 }
+
+@media (max-width: 1024px) {
+  .aside {
+    width: 340px;
+    padding: 30px;
+  }
+}
